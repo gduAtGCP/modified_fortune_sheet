@@ -214,7 +214,9 @@ export function setCellFormat(
   //   targetSheetData = sheetmanage.buildGridData(sheet);
   // }
 
-  const cellData = targetSheetData?.[row]?.[column] || {};
+//  const cellData = targetSheetData?.[row]?.[column] || {};
+// below fix from P 
+const cellData: Partial<Cell> = targetSheetData?.[row]?.[column] || {};
   const cfg = sheet.config || {};
 
   // 特殊格式
@@ -248,11 +250,15 @@ export function setCellFormat(
 
     cfg.borderInfo.push(borderInfo);
   } else {
-    cellData[attr] = value;
+//    cellData[attr] = value;
+// fix below was from P
+(cellData as any)[attr] = value;
+
   }
 
-  targetSheetData[row][column] = cellData;
-
+//  targetSheetData[row][column] = cellData;
+// fix below was from P
+targetSheetData[row][column] = cellData as Cell;
   sheet.config = cfg;
   ctx.config = cfg;
 }
