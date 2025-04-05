@@ -1,6 +1,23 @@
 
 Folked from https://github.com/ruilisi/fortune-sheet
 
+# Install node modules before run
+
+run from the root dir of the git package.
+
+```
+npm install
+cd src/FS/core/
+npm install
+cd ../formula-parser/
+npm install
+cd ../react/
+npm install
+cd ../../..
+```
+npm gen errors on build or run dev without doing the install in sub dirs. don't know why. 
+
+
 # React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.

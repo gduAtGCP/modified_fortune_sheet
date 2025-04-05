@@ -164,7 +164,8 @@ export const defaultSettings: Required<Settings> = {
   addRows: 50, // It will add the rows when we click on add row button
   showToolbar: true, // 是否显示工具栏
   showFormulaBar: true, // 是否显示公式栏
-  showSheetTabs: true, // 是否显示底部表格名称区域
+  // showSheetTabs: true, // 是否显示底部表格名称区域
+  showSheetTabs: false, // 是否显示底部表格名称区域
   data: [], // 客户端sheet数据[sheet1, sheet2, sheet3]
   config: {}, // 表格行高、列宽、合并单元格、公式等设置
   devicePixelRatio: 0, // 设备比例，比例越大表格分标率越高，0表示自动
@@ -280,12 +281,12 @@ export const defaultSettings: Required<Settings> = {
     "|",
     "filter-by-color",
     "|",
-    // "filter-by-condition",
-    // "|",
+    "filter-by-condition",
+    "|",
     "filter-by-value",
   ], // 筛选菜单
   generateSheetId: () => uuidv4(),
   hooks: {},
   customToolbarItems: [],
-  currency: "¥",
+  currency: "$",
 };
