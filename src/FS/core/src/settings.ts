@@ -159,13 +159,13 @@ export type Settings = {
 };
 
 export const defaultSettings: Required<Settings> = {
-  column: 60, // 空表格默认的列数量
-  row: 84, // 空表格默认的行数据量
+  column: 10, // 空表格默认的列数量
+  row: 50, // 空表格默认的行数据量
   addRows: 50, // It will add the rows when we click on add row button
   showToolbar: true, // 是否显示工具栏
   showFormulaBar: true, // 是否显示公式栏
-  // showSheetTabs: true, // 是否显示底部表格名称区域
-  showSheetTabs: false, // 是否显示底部表格名称区域
+  showSheetTabs: true, // 是否显示底部表格名称区域
+  // showSheetTabs: false, // 是否显示底部表格名称区域
   data: [], // 客户端sheet数据[sheet1, sheet2, sheet3]
   config: {}, // 表格行高、列宽、合并单元格、公式等设置
   devicePixelRatio: 0, // 设备比例，比例越大表格分标率越高，0表示自动
@@ -180,45 +180,45 @@ export const defaultSettings: Required<Settings> = {
   toolbarItems: [
     "undo",
     "redo",
-    "format-painter",
-    "clear-format",
-    "|",
-    "currency-format",
-    "percentage-format",
-    "number-decrease",
-    "number-increase",
-    "format",
-    "|",
-    "font",
-    "|",
-    "font-size",
-    "|",
-    "bold",
-    "italic",
-    "strike-through",
-    "underline",
-    "|",
-    "font-color",
-    "background",
-    "border",
-    "merge-cell",
+    // "format-painter",
+    // "clear-format",
+    // "|",
+    // "currency-format",
+    // "percentage-format",
+    // "number-decrease",
+    // "number-increase",
+    // "format",
+    // "|",
+    // "font",
+    // "|",
+    // "font-size",
+    // "|",
+    // "bold",
+    // "italic",
+    // "strike-through",
+    // "underline",
+    // "|",
+    // "font-color",
+    // "background",
+    // "border",
+    // "merge-cell",
     "|",
     "horizontal-align",
     "vertical-align",
     "text-wrap",
-    "text-rotation",
+    // "text-rotation",
     "|",
     "freeze",
-    "conditionFormat",
+    // "conditionFormat",
     "filter",
-    "link",
-    "image",
+    // "link",
+    // "image",
     "comment",
-    "quick-formula",
-    "dataVerification",
-    "splitColumn",
-    "locationCondition",
-    "screenshot",
+    // "quick-formula",
+    // "dataVerification",
+    // "splitColumn",
+    // "locationCondition",
+    // "screenshot",
     "search",
   ], // 自定义工具栏
   cellContextMenu: [
@@ -241,10 +241,10 @@ export const defaultSettings: Required<Settings> = {
     "orderZA", // 降序
     "filter", // 筛选选区
     "chart", // 图表生成
-    "image", // 插入图片
-    "link", // 插入链接
-    "data", // 数据验证
-    "cell-format", // 设置单元格格式
+    // "image", // 插入图片
+    // "link", // 插入链接
+    // "data", // 数据验证
+    // "cell-format", // 设置单元格格式
   ], // 自定义单元格右键菜单
   headerContextMenu: [
     "copy", // 复制
@@ -279,8 +279,8 @@ export const defaultSettings: Required<Settings> = {
     "sort-by-asc",
     "sort-by-desc",
     "|",
-    "filter-by-color",
-    "|",
+    // "filter-by-color",
+    // "|",
     "filter-by-condition",
     "|",
     "filter-by-value",
