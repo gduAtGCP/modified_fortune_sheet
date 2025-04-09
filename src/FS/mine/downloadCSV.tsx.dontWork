@@ -1,0 +1,128 @@
+import {  getFlowdata } from "../core";
+import WorkbookContext from "../react/src/context";
+import { useContext, useEffect, useState } from "react";
+
+
+type Props = {
+  tooltip?: string;
+  onClick?: (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
+  selected?: boolean;
+  children?: React.ReactNode;
+  iconName?: string;
+  icon?: React.ReactNode;
+  key?: string;
+};
+
+
+function iconDownload({size=24, color="currentColor", stroke=2, ...props}) {
+  return (
+      <svg 
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 24 24"
+    width={size}
+    height={size}
+    strokeWidth={stroke}
+    stroke={color}
+    fill="none"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    {...props}>
+      <path fill="none" stroke="none" d="M0 0h24v24H0z"/>
+      <path d="M4 16V17A3 3 0 0 0 7 20L17 20A3 3 0 0 0 20 17V16M12 4V16M8 12L12 16L16 12"/>
+  </svg>
+  )
+}
+
+function arrayToCSV(data: (string | number)[][], delimiter = ','): string {
+    console.log(data)
+  return data
+    .map(row =>
+      row
+        .map(cell => `"${cell.toString().replace(/"/g, '""')}"`) // Escape quotes
+        .join(delimiter)
+    )
+    .join('\n');
+}
+
+function downloadCSV(content: string, filename: string): void {
+  const blob = new Blob([content], { type: 'text/csv;charset=utf-8;' });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement('a');
+  link.href = url;
+  link.download = filename;
+  link.click();
+  URL.revokeObjectURL(url);
+}
+
+let DownloadCSVButton: Props={
+    tooltip: "Download to CSV",
+    icon: iconDownload({size:24, color:"#202020", stroke:1}),
+    key: "Download-to-CSV-new-customized-function",
+    onClick: ()=>{
+            console.log("Save clicked.")
+          console.log("isMounted",isMounted)
+        // const { context} =
+        //         useContext(WorkbookContext);
+        // const flowdata = getFlowdata(context);
+        // const csvString = arrayToCSV(flowdata);
+        // downloadCSV(csvString, 'output.csv');
+        // console.log("Save clicked.")
+      const [isMounted, setIsMounted] = useState(false);
+
+      useEffect(() => {
+        setIsMounted(true);
+        return () => setIsMounted(false);
+      }, []);
+
+      // const handleClick = () => {
+        // if (!isMounted || !workbookContext) return;
+        if (!isMounted) return;
+
+        const workbookContext = useContext(WorkbookContext);
+        const { context } = workbookContext;
+        const flowdata = getFlowdata(context);
+        const csvString = arrayToCSV(flowdata);
+        downloadCSV(csvString, 'output.csv');
+            console.log("Saved.")
+      }
+    }
+
+// export default testMenu
+// Convert testMenu to a component
+// function DownloadCSVButton_func() {
+//   const [isMounted, setIsMounted] = useState(false);
+//
+//   useEffect(() => {
+//     setIsMounted(true);
+//     return () => setIsMounted(false);
+//   }, []);
+//
+//   const handleClick = () => {
+//         console.log("Save clicked.")
+//       console.log("isMounted",isMounted)
+//     // if (!isMounted || !workbookContext) return;
+//     if (!isMounted) return;
+//
+//     // const workbookContext = useContext(WorkbookContext);
+//     // const { context } = workbookContext;
+//     // const flowdata = getFlowdata(context);
+//     // const csvString = arrayToCSV(flowdata);
+//     // downloadCSV(csvString, 'output.csv');
+//         console.log("Saved.")
+//   };
+//
+//   return {
+//     tooltip: "Download to CSV",
+//     icon: iconDownload({ size: 24, color: "#202020", stroke: 1 }),
+//     key: "Download-to-CSV-new-customized-function",
+//     onClick: handleClick
+//   };
+// }
+//
+// const DownloadCSVButton = DownloadCSVButton_func();
+
+export default DownloadCSVButton;
+
+
+
+

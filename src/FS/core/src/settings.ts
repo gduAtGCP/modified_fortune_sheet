@@ -1,6 +1,7 @@
 import { v4 as uuidv4 } from "uuid";
 import React from "react";
 import { Sheet, Selection, CellMatrix, Cell } from "./types";
+// import DownloadCSVButton from '../../mine/downloadCSV.tsx'
 
 export type Hooks = {
   beforeUpdateCell?: (r: number, c: number, value: any) => boolean;
@@ -159,8 +160,8 @@ export type Settings = {
 };
 
 export const defaultSettings: Required<Settings> = {
-  column: 10, // 空表格默认的列数量
-  row: 50, // 空表格默认的行数据量
+  column: 5, // 空表格默认的列数量
+  row: 10, // 空表格默认的行数据量
   addRows: 50, // It will add the rows when we click on add row button
   showToolbar: true, // 是否显示工具栏
   showFormulaBar: true, // 是否显示公式栏
@@ -203,11 +204,11 @@ export const defaultSettings: Required<Settings> = {
     // "border",
     // "merge-cell",
     "|",
-    "horizontal-align",
-    "vertical-align",
+    // "horizontal-align",
+    // "vertical-align",
     "text-wrap",
     // "text-rotation",
-    "|",
+    // "|",
     "freeze",
     // "conditionFormat",
     "filter",
@@ -287,6 +288,8 @@ export const defaultSettings: Required<Settings> = {
   ], // 筛选菜单
   generateSheetId: () => uuidv4(),
   hooks: {},
-  customToolbarItems: [],
+  customToolbarItems: [
+  // DownloadCSVButton
+  ],
   currency: "$",
 };
