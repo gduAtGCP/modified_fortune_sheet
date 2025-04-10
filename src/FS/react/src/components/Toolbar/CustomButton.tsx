@@ -8,6 +8,7 @@ type Props = {
   children?: React.ReactNode;
   iconName?: string;
   icon?: React.ReactNode;
+  // key?: string;
 };
 
 const CustomButton: React.FC<Props> = ({
@@ -17,6 +18,7 @@ const CustomButton: React.FC<Props> = ({
   children,
   iconName,
   icon,
+  // key,
 }) => {
   // const style: CSSProperties = { userSelect: "none" };
   return (
@@ -27,6 +29,7 @@ const CustomButton: React.FC<Props> = ({
       data-tips={tooltip}
       role="button"
       style={selected ? { backgroundColor: "#E7E5EB" } : {}}
+      // key={key}
     >
       <CustomIcon iconName={iconName} content={icon} />
       {tooltip && <div className="fortune-tooltip">{tooltip}</div>}

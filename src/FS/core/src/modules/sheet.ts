@@ -193,6 +193,7 @@ export function deleteSheet(ctx: Context, id: string) {
 export function updateSheet(ctx: Context, newData: Sheet[]) {
   newData.forEach((newDatum) => {
     const { data, row, column } = newDatum;
+    console.log(data,row,column)
     const index = getSheetIndex(ctx, newDatum.id!) as number;
     if (data != null) {
       // If row and column exist, compare row and column with data. If row and column do not exist, compare data with default.

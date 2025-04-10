@@ -1,5 +1,6 @@
 import React from "react";
 import SVGIcon from "../SVGIcon";
+import CustomIcon from "./CustomIcon";
 
 type Props = {
   tooltip: string;
@@ -8,6 +9,7 @@ type Props = {
   disabled?: boolean;
   selected?: boolean;
   children?: React.ReactNode;
+  icon?: React.ReactNode;
 };
 
 const Button: React.FC<Props> = ({
@@ -17,6 +19,7 @@ const Button: React.FC<Props> = ({
   disabled,
   selected,
   children,
+  icon,
 }) => {
   // const style: CSSProperties = { userSelect: "none" };
   return (
@@ -29,7 +32,8 @@ const Button: React.FC<Props> = ({
       aria-label={tooltip}
       style={selected ? { backgroundColor: "#E7E5EB" } : {}}
     >
-      <SVGIcon name={iconId} style={disabled ? { opacity: 0.3 } : {}} />
+    {icon?<CustomIcon  content={icon} />
+        :<SVGIcon name={iconId} style={disabled ? { opacity: 0.3 } : {}} />}
       {tooltip && <div className="fortune-tooltip">{tooltip}</div>}
       {children}
     </div>
