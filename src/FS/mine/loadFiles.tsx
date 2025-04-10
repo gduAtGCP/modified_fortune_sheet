@@ -28,30 +28,105 @@ function iconLoad({size=24, color="currentColor", stroke=2, ...props}) {
   )
 }
 
-async function openFileDialog() {
-  try {
-    const [fileHandle] = await window.showOpenFilePicker({
-      types: [{
-        description: 'Data Files',
-        accept: {
-          'text/csv': ['.csv'],
-          'application/json': ['.json'],
-          'application/vnd.ms-excel': ['.xls'],
-          'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet': ['.xlsx']
-        }
-      }],
-      multiple: false
+async function openFileDialog(): Promise<File | null> {
+  return new Promise((resolve, reject) => {
+    // Create a hidden file input element
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = '.csv,.json,.xls,.xlsx'; // Specify allowed file types
+    input.style.position = 'fixed';
+    input.style.top = '-1000px'; // Move off-screen
+    input.style.left = '-1000px';
+    input.style.opacity = '0'; // Ensure it's visually hidden
+
+    // Cleanup function to safely remove the input element
+    const cleanup = () => {
+      if (document.body.contains(input)) {
+        document.body.removeChild(input);
+      }
+    };
+
+    // Handle file selection or cancellation
+    input.addEventListener('change', () => {
+      if (input.files && input.files.length > 0) {
+        resolve(input.files[0]); // Return the selected file
+      } else {
+        resolve(null); // No file selected (cancelled)
+      }
+      cleanup();
     });
 
-    const file = await fileHandle.getFile();
-    return file;
-  } catch (err) {
-    if (err.name !== 'AbortError') {
-      console.error('File selection failed', err);
-    }
-    return null;
-  }
+    input.addEventListener('error', (error) => {
+      reject(error); // Handle errors
+      cleanup();
+    });
+
+    // Append the input to the DOM and trigger the file dialog
+    document.body.appendChild(input);
+    input.click();
+  });
 }
+ 
+
+// async function openFileDialog(): Promise<File | null> {
+//   return new Promise((resolve, reject) => {
+//     // Create a hidden file input element
+//     const input = document.createElement('input');
+//     input.type = 'file';
+//     input.accept = '.csv,.json,.xls,.xlsx'; // Specify allowed file types
+//
+//     // Add a change event listener to handle file selection
+//     input.onchange = (event: Event) => {
+//       const target = event.target as HTMLInputElement;
+//       if (target.files && target.files.length > 0) {
+//         resolve(target.files[0]); // Return the selected file
+//       } else {
+//         resolve(null); // No file selected
+//       }
+//       document.body.removeChild(input); // Clean up the DOM
+//     };
+//
+//     // Reject the promise if there is an error
+//     input.onerror = (error) => {
+//       reject(error);
+//       document.body.removeChild(input); // Clean up the DOM
+//     };
+//
+//     // Append to the DOM and trigger the click event
+//     document.body.appendChild(input);
+//     input.click();
+//   });
+// }
+//
+//
+// async function openFileDialog() {
+//   try {
+//     const [fileHandle] = await window.showOpenFilePicker({
+//       types: [{
+//         description: 'Data Files',
+//         accept: {
+//           'text/csv': ['.csv'],
+//           'application/json': ['.json'],
+//           'application/vnd.ms-excel': ['.xls'],
+//           'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet': ['.xlsx']
+//         }
+//       }],
+//       multiple: false
+//     });
+//
+//     const file = await fileHandle.getFile();
+//     return file;
+//   } catch (err) {
+//     // if (err.name !== 'AbortError') {
+//     //   console.error('File selection failed', err);
+//     // }
+//     if (err instanceof Error && err.name !== 'AbortError') {
+//           console.error('Error:', err.message);
+//     }
+//
+//     return null;
+//   }
+// }
 
 // Alternative using slice (more efficient)
 function removeWrappingQuotesAlt(str: string): string {
@@ -105,7 +180,7 @@ function LoadButton(){
             { header: 1 } // Key change for 2D array
           ) as any[][];
         } else if (fileExtension==='json'){
-            data=JSON.parse(fileContent)
+            data=JSON.parse(fileContent as string)
         } else {
           alert('Unsupported file format.');
           return

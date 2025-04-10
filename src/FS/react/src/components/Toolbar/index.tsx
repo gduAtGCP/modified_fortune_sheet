@@ -26,7 +26,7 @@ import {
   handleFreeze,
   // insertImage,
   // showImgChooser,
-  // updateFormat,
+  updateFormat,
   handleSort,
   // handleHorizontalAlign,
   // handleVerticalAlign,
@@ -49,7 +49,7 @@ import { FormulaSearch } from "../FormulaSearch";
 // import { LocationCondition } from "../LocationCondition";
 // import DataVerification from "../DataVerification";
 // import ConditionalFormat from "../ConditionFormat";
-// import CustomButton from "./CustomButton";
+import CustomButton from "./CustomButton";
 // import { CustomColor } from "./CustomColor";
 // import CustomBorder from "./CustomBorder";
 // import { FormatSearch } from "../FormatSearch";
