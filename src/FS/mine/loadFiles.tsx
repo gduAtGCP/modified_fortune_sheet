@@ -128,9 +128,14 @@ function LoadButton(){
                         insertRowOrColumn(draftCtx,"column",0,newWidth,"rightbottom")
                         insertRowOrColumn(draftCtx,"row",0,newHeight,"rightbottom")
                         // setCellValue(draftCtx, 0,0,null, 3333)
+                        const d2=getFlowdata(draftCtx)
                         for (let r=0;r<newHeight;r+=1){
                             for (let c=0;c<newWidth;c+=1){
+                                try{
                                 setCellValue(draftCtx,r,c,null,data[r][c])
+                                } catch (error){
+                                    d2[r][c]=data[r][c]
+                                }
                             }
                         }
                     });
