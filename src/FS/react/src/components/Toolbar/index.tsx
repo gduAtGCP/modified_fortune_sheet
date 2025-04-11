@@ -7,16 +7,16 @@ import React, {
 } from "react";
 import {
   toolbarItemClickHandler,
-  handleTextBackground,
-  handleTextColor,
-  handleTextSize,
+  // handleTextBackground,
+  // handleTextColor,
+  // handleTextSize,
   normalizedCellAttr,
   getFlowdata,
-  newComment,
-  editComment,
-  deleteComment,
-  showHideComment,
-  showHideAllComments,
+  // newComment,
+  // editComment,
+  // deleteComment,
+  // showHideComment,
+  // showHideAllComments,
   autoSelectionFormula,
   handleSum,
   locale,
@@ -31,9 +31,9 @@ import {
   // handleHorizontalAlign,
   // handleVerticalAlign,
   // handleScreenShot,
-  createFilter,
-  clearFilter,
-  applyLocation,
+  // createFilter,
+  // clearFilter,
+  // applyLocation,
 } from "../../../../core";
 import _ from "lodash";
 import WorkbookContext from "../../context";
@@ -56,6 +56,7 @@ import CustomButton from "./CustomButton";
 import DownloadCSVButton from '../../../../mine/downloadCSV.tsx'
 import DownloadJsonButton from '../../../../mine/downloadJSON.tsx'
 import LoadButton from '../../../../mine/loadFiles.tsx'
+import MyMenu from '../../../../mine/menu.tsx'
 
 const Toolbar: React.FC<{
   setMoreItems: React.Dispatch<React.SetStateAction<React.ReactNode>>;
@@ -209,6 +210,11 @@ const Toolbar: React.FC<{
       const tooltip = toolbar[name];
       if (name === "|") {
         return <Divider key={i} />;
+      }
+      if (name ==="menu"){
+          return (
+              <MyMenu />
+          )
       }
       if (name==="load"){
           return (
