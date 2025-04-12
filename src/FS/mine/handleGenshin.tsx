@@ -1,64 +1,43 @@
-// import { Context } from '../core/src/context.ts'
-// import {useState} from "react"
 import NumberInput from './NumberInput.tsx'
 import TextInput from './TextInput.tsx'
 import CheckBox from './CheckBox.tsx'
 import DrawDownSelection from './DrawDown.tsx'
 import { getColNames, excelColumnToIndex, getMultiColNum } from './utilities.tsx'
+import MyGuiVar from './myGuiVar.tsx'
 
 function handleGenshin(
     data: any[][], // the spreadsheet data in 2d array
-   showDialog: ()=>void,
+   showDialog: (
+         content: string | React.ReactNode,
+               type?: "ok" | "yesno",
+                     onOk?: () => void ,
+                               onCancel?: () => void 
+   )=>void,
 ){
-       let alpha:number=0.05;
-       let inputText:string="Klee";
-       let exclRow1:boolean=true;
-       let drawdown1:string="1";
-       let drawdown2:string="";
-
-         const handleValueChange = (newValue: number) => {
-                 console.log('New value:', newValue);
-                 alpha=newValue;
-                   };
-         const handleTextChange = (newValue: string) => {
-                 console.log('New text value:', newValue);
-                 inputText=newValue;
-                   };
-        const handleCheckboxChange = (newValue: boolean) =>{
-            console.log("new checkbox", newValue);
-            exclRow1=newValue;
-        }
-        const handleDrawDownChange = (newValue: string) =>{
-            console.log("draw down new",newValue);
-            drawdown1=newValue;
-        }
-        const handleDrawDownChange2 = (newValue: string) =>{
-            console.log("draw down new",newValue);
-            drawdown2=newValue;
-        }
-       
-       console.log(data)
+       let alpha=new MyGuiVar(0.05);
+       let inputText=new MyGuiVar("Kleeeee");
+       let exclRow1=new MyGuiVar(true);
+       let drawdown1=new MyGuiVar("1");
+       let drawdown2=new MyGuiVar("");
        
        function colSum(){
-           console.log("selected col",drawdown2)
-           const colSelect=excelColumnToIndex(drawdown2);
+           console.log("selected col",drawdown2.value)
+           const colSelect=excelColumnToIndex(drawdown2.value as string);
            console.log("col index",colSelect);
            if (colSelect===null || colSelect<0 ) return;
-           // let colList: number[] = []
-           // colList.push(colSelect);
-           // console.log("parent",colList);
-           const arr=getMultiColNum(data,[colSelect] , exclRow1 )
+           const arr=getMultiColNum(data,[colSelect] , exclRow1.value as boolean )
            console.log(arr)
            return arr[0].reduce((acc, curr) => acc + curr, 0);
        }
 
        function onClick(){
+           console.log(exclRow1.value)
            return (
                <div className="textboxs">
-               <p>Got alpha value is {alpha}.</p>
-               <p>Inputed text is "{inputText}".</p>
-               <p>exclude row 1 {exclRow1}.</p>
-               <p>drawdown get number: {drawdown1}. </p>
+               <p>Got alpha value is {alpha.value}.</p>
+               <p>Inputed text is "{inputText.value}".</p>
+               <p>exclude row 1 {exclRow1.value.toString()}.</p>
+               <p>drawdown get number: {drawdown1.value}. </p>
                <p>Sum of the selected column = {colSum()} </p>
                </div>
            )
@@ -68,16 +47,16 @@ function handleGenshin(
            (
          <div>
                 <h3>OG Player ? Here? </h3>
-                <NumberInput onChange={handleValueChange} textLabel="Alpha: " defaultValue={alpha} step="0.1" />
-                <TextInput onChange={handleTextChange} textLabel="Text: " defaultValue={inputText} />
-                <CheckBox onChange={handleCheckboxChange} textLabel="Exclude the frist Row" defaultValue={exclRow1} /> 
-                <DrawDownSelection onChange={handleDrawDownChange} options={["1","2"]} textLabel="Select a number: " />
-                <DrawDownSelection onChange={handleDrawDownChange2}
-                                    options={getColNames(data)} textLabel="Select a column: " width="100" />
+                <NumberInput variable={alpha} textLabel="Alpha: " step="0.1" />
+                <TextInput variable={inputText} textLabel="Text: "  />
+                <CheckBox variable={exclRow1} textLabel="Exclude the frist Row"  /> 
+                <DrawDownSelection variable={drawdown1} options={["1","2"]} textLabel="Select a number: " />
+                <DrawDownSelection variable={drawdown2}
+                                    options={getColNames(data)} textLabel="Select a column: " width={100} />
          </div>
        ), // above is the dialog content
        "yesno", // the type of dialog yesno or ok
-        ()=>{showDialog(onClick() ,"ok")}
+        ()=>{showDialog(onClick() ,"ok")} // CAll back function when "OK" clicked.
                 )
    }
 

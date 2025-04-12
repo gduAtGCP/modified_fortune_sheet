@@ -1,19 +1,32 @@
 import React, { useState, ChangeEvent } from 'react';
+import MyGuiVar from './myGuiVar.tsx'
 
 interface NumberInputProps {
-  onChange: (value: number) => void;
-  textLabel?: string ;
+  // onChange: (value: number) => void;
+    variable: MyGuiVar;
+    textLabel?: string ;
   defaultValue?: number | string;
   step?:number | string;
 }
 
-const NumberInput = ({ onChange, 
+const NumberInput = ({ 
+    variable,
+    // onChange,
                      textLabel="", 
-                     defaultValue=0.05,
+                     defaultValue=null,
                      step=0.01
                      }: NumberInputProps) => {
+  
+ const onChange=(v: number)=>{
+      variable.setValue(v);
+  }
 
-  const [value, setValue] = useState<string>(defaultValue.toString());
+  
+  if (defaultValue===null){
+      defaultValue=variable.value as number;}
+  const [value, setValue] = useState<string>(
+      defaultValue.toString()
+  );
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const inputValue = e.target.value;
@@ -22,10 +35,10 @@ const NumberInput = ({ onChange,
     // Convert to number only if valid
     const numericValue = parseFloat(inputValue);
     if (!isNaN(numericValue)) {
-      onChange(numericValue);
+      onChange(numericValue as number );
     } else {
       // Handle invalid input (optional)
-      onChange(defaultValue); // Fallback to default
+      onChange(defaultValue as number ); // Fallback to default
     }
   };
 

@@ -1,18 +1,26 @@
 import React, { useState, ChangeEvent } from 'react';
+import MyGuiVar from './myGuiVar.tsx'
 
 interface CheckTextInputProps {
-  onCheckChange: (checked: boolean) => void;
-  defaultValue?: boolean;
+  // onCheckChange: (checked: boolean) => void;
+  variable:MyGuiVar;
+    defaultValue?: boolean;
   textLabel?: string;
   // onTextChange: (text: string) => void;
 }
 
 const CheckBox = ({ 
-    onChange, 
-    defaultValue = false,
+    variable, 
+    defaultValue = null,
     textLabel = "Checkboxdefault"
     }: CheckTextInputProps) => {
 
+ const onChange=(v: boolean)=>{
+      variable.setValue(v);
+  }
+  if (defaultValue===null){
+      defaultValue=variable.value as boolean;
+  }
   const [checked, setChecked] = useState<boolean>(defaultValue);
 
   const handleCheckboxChange = (e: ChangeEvent<HTMLInputElement>) => {

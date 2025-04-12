@@ -18,7 +18,7 @@
     "noUncheckedSideEffectImports": true,
     "strictNullChecks": false,
     "noImplicitAny": false,
-    "types": ["@types/wicg-file-system-access"]
+    "types": ["plotly.js","@types/wicg-file-system-access"]
 },
   "include": ["src"]
 }

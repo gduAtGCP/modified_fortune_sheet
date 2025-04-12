@@ -1,18 +1,26 @@
 import React, { useState, ChangeEvent } from 'react';
+import MyGuiVar from './myGuiVar.tsx'
 
 interface TextInputProps {
-  onChange: (value: string) => void;
+  // onChange: (value: string) => void;
+  variable: MyGuiVar;
   textLabel?: string ;
   defaultValue?: string;
 }
 
-const TextInput = ({ onChange, textLabel="", defaultValue="" }: NumberInputProps) => {
-  const [value, setValue] = useState<string>(defaultValue.toString());
+const TextInput = ({ variable, textLabel="", defaultValue=null }: TextInputProps) => {
+  const [value, setValue] = useState<string>(
+      // defaultValue.toString()
+  defaultValue===null?variable.value.toString():defaultValue.toString()
+  );
+
+ const onChange=(v: string)=>{
+      variable.setValue(v);
+  }
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const inputValue = e.target.value;
     setValue(inputValue);
-    
       onChange(inputValue); 
   };
 

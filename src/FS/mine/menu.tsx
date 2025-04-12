@@ -7,6 +7,9 @@ import WorkbookContext from "../react/src/context";
 import {useDialog} from '../react/src/hooks/useDialog.tsx'
 import handleGenshin from './handleGenshin.tsx'
 import {  getFlowdata } from "../core";
+import handleZZZ from './handleZZZ.tsx';
+import handleMoon from './handleMoon.tsx'; 
+import handleNeg from './handleNeg.tsx';
 
 function MyMenu(){
     const { context, setContext} = useContext(WorkbookContext);
@@ -34,6 +37,15 @@ function MyMenu(){
             else if (value === "genshin" ){
                 handleGenshin(data, showDialog);
             }
+            else if (value === "zzz" ){
+                handleZZZ(data,showDialog);
+            }
+            else if (value === "moon"){
+                handleMoon(data,showDialog);
+            }
+            else if (value === "neg" ){
+                handleNeg(data, showDialog);
+            }
 
         }
     const items = [
@@ -51,8 +63,16 @@ function MyMenu(){
           },
           {
             text: "ZZZZZ  ZZZZ",
-            value: "freeze-cancel",
+            value: "zzz",
           },
+          {
+            text: "Moooon 3",
+            value: "moon",
+          },
+          { 
+              text: "Can I use negotiation?",
+              value: "neg",
+          }
         ];
     return (
           <Combo
