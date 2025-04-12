@@ -1,31 +1,60 @@
-import handleMyMenuClick from './menuClick.tsx'
+// import handleMyMenuClick from './menuClick.tsx'
 import  {useContext } from "react";
 import Combo from "../react/src/components/Toolbar/Combo.tsx";
 import Select, { Option } from "../react/src/components/Toolbar/Select.tsx";
 import WorkbookContext from "../react/src/context";
+// import { Context } from '../core/src/context.ts'
+import {useDialog} from '../react/src/hooks/useDialog.tsx'
+import handleGenshin from './handleGenshin.tsx'
+import {  getFlowdata } from "../core";
 
 function MyMenu(){
-  const { context, setContext, refs, settings, handleUndo, handleRedo } =
-    useContext(WorkbookContext);
-        const items = [
+    const { context, setContext} = useContext(WorkbookContext);
+    const { showDialog, hideDialog } = useDialog();
+
+    function handleMyMenuClick(
+        // ctx: Context,
+        value: (string | null) = null)
+        {
+            // const { showDialog, hideDialog } = useDialog()
+            console.log("handle my menu click",value)
+            const data=getFlowdata(context) as any[][]
+
+            if (!value) return;
+            if (value === "mona"){
+                showDialog("Mona no Lisa","ok");
+            }
+            else if (value === "lisa"){
+                showDialog("Lisa no Mona","yesno",
+                          ()=>{ // the onClick callback function.
+                                showDialog("dafenqi","ok");
+                          }
+                          );
+            }
+            else if (value === "genshin" ){
+                handleGenshin(data, showDialog);
+            }
+
+        }
+    const items = [
           {
             text: "M..o...na",
-            value: "freeze-row",
+            value: "mona",
           },
           {
             text: "L....is...a",
-            value: "freeze-col",
+            value: "lisa",
           },
           {
             text: "Traveller.PAIMON",
-            value: "freeze-row-col",
+            value: "genshin",
           },
           {
             text: "ZZZZZ  ZZZZ",
             value: "freeze-cancel",
           },
         ];
-        return (
+    return (
           <Combo
             text="Menuuuu"
             key="MyMenu"
@@ -37,15 +66,20 @@ function MyMenu(){
                   <Option
                     key={value}
                     onClick={() => {
-                      setContext((ctx) => {
-                        handleMyMenuClick(ctx, value);
-                      });
+                      // setContext((ctx) => {
+                        // the setContext will trigger the function call twice
+                        // instead once. It's only useful when need change the 
+                        // value of the spreadsheet. If just read the values
+                        // and do something, commenting it out is fine.
+                        handleMyMenuClick( value);
+                      // });
                       setOpen(false);
                     }}
                   >
                     <div className="fortune-toolbar-menu-line">
                       {text}
-                      {/* <SVGIcon name={value} /> */}
+                      {/* <SVGIcon name={value} />
+                         Can insert 24x24 SVG icon here */}
                     </div>
                   </Option>
                 ))}

@@ -165,7 +165,7 @@ function LoadButton(){
 
     reader.onload = (event) => {
       const fileContent = event.target?.result;
-        console.log(fileContent)
+        // console.log(fileContent)
         let data:any[][]
       try {
         if (fileExtension === 'csv') {

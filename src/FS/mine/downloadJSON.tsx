@@ -2,6 +2,7 @@ import {  getFlowdata } from "../core";
 import WorkbookContext from "../react/src/context";
 import { useContext } from "react";
 import CustomButton from '../react/src/components/Toolbar/CustomButton.tsx'
+import { findMinCoveringSubarray } from './utilities.tsx'
 
 function saveIcon({size=24, color="currentColor", stroke=2, ...props}){
     return (
@@ -31,28 +32,28 @@ function downloadJson(content: string, filename: string): void {
   URL.revokeObjectURL(url);
 }
 
-function findMinCoveringSubarray(grid) {
-  let maxRow = -1;
-  let maxCol = -1;
-
-  // Find the farthest non-null element's row and column
-  for (let row = 0; row < grid.length; row++) {
-    for (let col = 0; col < grid[row].length; col++) {
-      if (grid[row][col] !== null) {
-        maxRow = Math.max(maxRow, row);
-        maxCol = Math.max(maxCol, col);
-      }
-    }
-  }
-
-  // Handle all-null case
-  if (maxRow === -1 || maxCol === -1) return [];
-
-  // Slice the grid to the required bounds
-  return grid
-    .slice(0, maxRow + 1)
-    .map(row => row.slice(0, maxCol + 1));
-}
+// function findMinCoveringSubarray(grid) {
+//   let maxRow = -1;
+//   let maxCol = -1;
+//
+//   // Find the farthest non-null element's row and column
+//   for (let row = 0; row < grid.length; row++) {
+//     for (let col = 0; col < grid[row].length; col++) {
+//       if (grid[row][col] !== null) {
+//         maxRow = Math.max(maxRow, row);
+//         maxCol = Math.max(maxCol, col);
+//       }
+//     }
+//   }
+//
+//   // Handle all-null case
+//   if (maxRow === -1 || maxCol === -1) return [];
+//
+//   // Slice the grid to the required bounds
+//   return grid
+//     .slice(0, maxRow + 1)
+//     .map(row => row.slice(0, maxCol + 1));
+// }
 
 function DownloadJsonButton(){
     const tooltip= "Save to Json"
