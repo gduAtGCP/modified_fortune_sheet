@@ -185,6 +185,8 @@ export const defaultSettings: Required<Settings> = {
     "|",
     "undo",
     "redo",
+    "|",
+    "menu",
     // "format-painter",
     // "clear-format",
     // "|",
@@ -225,8 +227,6 @@ export const defaultSettings: Required<Settings> = {
     // "locationCondition",
     // "screenshot",
     "search",
-    "|",
-    "menu"
   ], // 自定义工具栏
   cellContextMenu: [
     "copy", // 复制

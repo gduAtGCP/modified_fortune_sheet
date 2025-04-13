@@ -2,7 +2,7 @@ import {  getFlowdata } from "../core";
 import WorkbookContext from "../react/src/context";
 import { useContext } from "react";
 import CustomButton from '../react/src/components/Toolbar/CustomButton.tsx'
-import { findMinCoveringSubarray } from './utilities.tsx'
+import { downloadFile, findMinCoveringSubarray } from './utilities.tsx'
 
 function saveIcon({size=24, color="currentColor", stroke=2, ...props}){
     return (
@@ -22,16 +22,16 @@ strokeLinecap="round" strokeLinejoin="round"
 }
 
 
-function downloadJson(content: string, filename: string): void {
-  const blob = new Blob([content], { type: 'text/json;charset=utf-8;' });
-  const url = URL.createObjectURL(blob);
-  const link = document.createElement('a');
-  link.href = url;
-  link.download = filename;
-  link.click();
-  URL.revokeObjectURL(url);
-}
-
+// function downloadJson(content: string, filename: string): void {
+//   const blob = new Blob([content], { type: 'text/json;charset=utf-8;' });
+//   const url = URL.createObjectURL(blob);
+//   const link = document.createElement('a');
+//   link.href = url;
+//   link.download = filename;
+//   link.click();
+//   URL.revokeObjectURL(url);
+// }
+//
 // function findMinCoveringSubarray(grid) {
 //   let maxRow = -1;
 //   let maxCol = -1;
@@ -63,14 +63,22 @@ function DownloadJsonButton(){
     const saveJson= ()=>{
             console.log("Save clicked.")
         const flowdata = getFlowdata(context);
-        if (flowdata == null) return;
+        // if (flowdata == null) return;
+        if (flowdata == null){
+            alert("The spreadsheet is empty.");
+            return;
+        }
         console.log(flowdata)
         const minArray=findMinCoveringSubarray(flowdata)
         console.log(minArray)
         // console.log(minArray[0][0].v)
-        if (minArray.length===0) return
+        // if (minArray.length===0) return
+        if (minArray.length===0) {
+            alert("The spreadsheet is empty.");
+            return;
+        }
         const jsonString = JSON.stringify(minArray, null, 2);
-        downloadJson(jsonString, 'output.json');
+        downloadFile(jsonString, 'output.json');
             console.log("Saved.")
       }
     return (

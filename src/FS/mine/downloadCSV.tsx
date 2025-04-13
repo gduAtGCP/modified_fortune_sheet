@@ -2,7 +2,7 @@ import {  getFlowdata } from "../core";
 import WorkbookContext from "../react/src/context";
 import { useContext } from "react";
 import CustomButton from '../react/src/components/Toolbar/CustomButton.tsx'
-import { findMinCoveringSubarray } from './utilities.tsx'
+import { downloadFile, findMinCoveringSubarray } from './utilities.tsx'
 
 function iconDownload({size=24, color="currentColor", stroke=2, ...props}) {
     // Source:
@@ -38,15 +38,41 @@ function arrayToCSV(data: (string | number)[][], delimiter = ','): string {
     .join('\n');
 }
 
-function downloadCSV(content: string, filename: string): void {
-  const blob = new Blob([content], { type: 'text/csv;charset=utf-8;' });
-  const url = URL.createObjectURL(blob);
-  const link = document.createElement('a');
-  link.href = url;
-  link.download = filename;
-  link.click();
-  URL.revokeObjectURL(url);
-}
+// function downloadCSV(content: string, filename: string): void {
+//   const blob = new Blob([content], { type: 'text/csv;charset=utf-8;' });
+//   const url = URL.createObjectURL(blob);
+//   const link = document.createElement('a');
+//   link.href = url;
+//   link.download = filename;
+//   link.click();
+//   URL.revokeObjectURL(url);
+// }
+
+// function downloadCSV(content: string, defaultFilename: string): void {
+//   const blob = new Blob([content], { type: 'text/csv;charset=utf-8;' });
+//
+//   // Handle IE/Edge browsers
+//   if (window.navigator && (window.navigator as any).msSaveBlob) {
+//     (window.navigator as any).msSaveBlob(blob, defaultFilename);
+//     return;
+//   }
+//
+//   // Handle modern browsers
+//   const url = URL.createObjectURL(blob);
+//   const link = document.createElement('a');
+//
+//   // Prompt for filename
+//   const userFilename = prompt('Enter filename:', defaultFilename);
+//   if (!userFilename) return;  // User canceled prompt
+//
+//   link.href = url;
+//   link.download = userFilename;
+//   document.body.appendChild(link);  // Required for Firefox
+//   link.click();
+//   document.body.removeChild(link);
+//   URL.revokeObjectURL(url);
+// }
+//
 
 // function findMinCoveringSubarray(grid) {
 //   let maxRow = -1;
@@ -79,15 +105,21 @@ function DownloadCSVButton(){
     const saveCSV= ()=>{
             console.log("Save clicked.")
         const flowdata = getFlowdata(context);
-        if (flowdata == null) return;
+        if (flowdata == null){
+            alert("The spreadsheet is empty.");
+            return;
+        }
         console.log(flowdata)
         const minArray=findMinCoveringSubarray(flowdata)
         console.log(minArray)
         // console.log(minArray[0][0].v)
-        if (minArray.length===0) return
+        if (minArray.length===0) {
+            alert("The spreadsheet is empty.");
+            return;
+        }
         const csvString = arrayToCSV(minArray.map(row =>
                                                     row.map(cell => (cell === null ? "" : cell.v))));
-        downloadCSV(csvString, 'output.csv');
+        downloadFile(csvString, 'output.csv');
             console.log("Saved.")
       }
     return (

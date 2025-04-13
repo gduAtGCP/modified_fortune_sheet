@@ -19,17 +19,6 @@ const handleYeti = (
       type: 'bar'
     }
   ];
-  // const scatterData: Plotly.Data[] = [{
-  //   x: [1, 2, 3, 4],
-  //   y: [10, 15, 13, 17],
-  //   type: 'scatter',
-  //   mode: 'markers',
-  //   marker: {
-  //     color: 'rgba(255, 100, 102, 0.7)',
-  //     size: 14
-  //   }
-  // }];
-  //
   const layout = {
       width:400,
       height:400,
@@ -40,9 +29,11 @@ const handleYeti = (
 
   showDialog(
       (
-    <div>
-      <h1>Dynamic Plotly Chart</h1>
+    <div className="textboxs">
+      <h3>Dynamic Plotly Chart</h3>
+      <p>There should be not co-existance. The number three is chilling. The most soulness mention that if you tired yourself to the orbit.</p>
       <PlotlyChart data={data2} layout={layout} />
+      <p>There should be not co-existance. The number three is chilling. The most soulness mention that if you tired yourself to the orbit.</p>
     </div>
       ),
       "ok"

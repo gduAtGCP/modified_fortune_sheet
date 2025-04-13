@@ -1,3 +1,34 @@
+export function downloadFile(content: string, defaultFilename: string): void {
+  // Determine file type from default filename extension
+  const isCSV = defaultFilename.toLowerCase().endsWith('.csv');
+  const mimeType = isCSV ? 'text/csv;charset=utf-8;' : 'application/json;charset=utf-8;';
+  
+  // Create blob with appropriate MIME type
+  const blob = new Blob([content], { type: mimeType });
+
+  // Handle IE/Edge browsers
+  if (window.navigator && (window.navigator as any).msSaveBlob) {
+    (window.navigator as any).msSaveBlob(blob, defaultFilename);
+    return;
+  }
+
+  // Handle modern browsers
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement('a');
+
+  // Prompt for filename
+  const userFilename = prompt('Enter filename:', defaultFilename);
+  if (!userFilename) return;  // User canceled prompt
+
+  link.href = url;
+  link.download = userFilename;
+  document.body.appendChild(link);  // Required for Firefox
+  link.click();
+  document.body.removeChild(link);
+  URL.revokeObjectURL(url);
+}
+ 
+
 function getFirstWord(input: string): string {
   return input.trim().split(/\s+/)[0];
 }
