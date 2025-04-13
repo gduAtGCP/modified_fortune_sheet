@@ -1,8 +1,5 @@
 import React from 'react'
-// import { getColNames, excelColumnToIndex, getMultiColNum } from './utilities.tsx'
-// import MultiSelectBox from './multiSelect2.tsx'
-// import MyGuiVar from './myGuiVar.tsx'
-import PlotlyScatterChart from './scatterPlot.tsx'
+import PlotlyChart from './plotlyPlot.tsx'
 
 function handleMoon(
     data: any[][], // the spreadsheet data in 2d array
@@ -24,18 +21,12 @@ function handleMoon(
     }
   }];
 
-  // const chartLayout: Partial<Plotly.Layout> = {
-  //   title: 'Dynamic Scatter Plot',
-  //   xaxis: { title: 'X Values' },
-  //   yaxis: { title: 'Y Values' },
-  //   hovermode: 'closest'
-  // };
 const chartLayout: Partial<Plotly.Layout> = {
    title: {
     text: 'Dynamic Scatter Plot',  // REQUIRED
     font: { size: 20 },            // Optional styling
     x: 0.5,                        // Center title
-    y: 0.95                        // Position from top
+    // y: 0.95                        // Position from top
   },
    xaxis: { 
     title: { 
@@ -52,7 +43,8 @@ const chartLayout: Partial<Plotly.Layout> = {
     range: [5,25],
   },
      // margin: { t: 30, l: 20, r: 20, b: 20 }, // Reduced bottom margin
-         // height: 300, // Fixed height prevents auto-scaling
+         height: 500, // Fixed height prevents auto-scaling
+         width: 500,
   hovermode: 'closest'
 };
  
@@ -60,8 +52,9 @@ const chartLayout: Partial<Plotly.Layout> = {
       (
           <>
           <p>This implementation provides a flexible, type-safe solution for rendering tables in React with Plotly, supporting both direct data input and API-driven JSON configurations.</p>
-    <div style={{ width: '80vw', height: '70vh' }}>
-      <PlotlyScatterChart 
+    <div 
+>
+      <PlotlyChart 
         data={scatterData} 
         layout={chartLayout}
       />

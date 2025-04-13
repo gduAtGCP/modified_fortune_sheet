@@ -10,6 +10,7 @@ import {  getFlowdata } from "../core";
 import handleZZZ from './handleZZZ.tsx';
 import handleMoon from './handleMoon.tsx'; 
 import handleNeg from './handleNeg.tsx';
+import handleYeti from './handleYeti.tsx';
 
 function MyMenu(){
     const { context, setContext} = useContext(WorkbookContext);
@@ -46,7 +47,9 @@ function MyMenu(){
             else if (value === "neg" ){
                 handleNeg(data, showDialog);
             }
-
+            else if (value === "yeti" ){
+                handleYeti( data, showDialog );
+            }
         }
     const items = [
           {
@@ -72,6 +75,10 @@ function MyMenu(){
           { 
               text: "Can I use negotiation?",
               value: "neg",
+          },
+          { 
+              text: "water bootle",
+              value: "yeti",
           }
         ];
     return (
