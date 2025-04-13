@@ -42,7 +42,7 @@ const PlotlyChart: React.FC<PlotlyChartProps> = ({ data, layout }) => {
     };
   }, [data, layout]);
 
-  return <div ref={chartRef} style={{ width: '100%', height: '500px' }} />;
+  return <div ref={chartRef} style={{ width: '100%' }} />;
 };
 
 export default PlotlyChart;
