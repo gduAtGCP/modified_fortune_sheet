@@ -57,6 +57,7 @@ import DownloadCSVButton from '../../../../mine/downloadCSV.tsx'
 import DownloadJsonButton from '../../../../mine/downloadJSON.tsx'
 import LoadButton from '../../../../mine/loadFiles.tsx'
 import MyMenu from '../../../../mine/menu.tsx'
+import About from '../../../../mine/about.tsx'
 
 const Toolbar: React.FC<{
   setMoreItems: React.Dispatch<React.SetStateAction<React.ReactNode>>;
@@ -211,6 +212,11 @@ const Toolbar: React.FC<{
       if (name === "|") {
         return <Divider key={i} />;
       }
+      if (name === "about") {
+          return (
+              <About />
+          )
+    }
       if (name ==="menu"){
           return (
               <MyMenu />
